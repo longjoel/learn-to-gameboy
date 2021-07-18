@@ -1,3 +1,4 @@
 day-*/node_modules/
 day-*/bin
 day-*/obj
+.vscode/
