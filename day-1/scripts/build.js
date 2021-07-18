@@ -10,11 +10,10 @@ const binPath = path.join(root, 'bin');
 
 const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json')));
 
-
-
+const GBDK_ROOT = path.join(__dirname, '..','..','tools','gbdk');
+const LCC = path.join(GBDK_ROOT, 'bin','lcc');
 
 let ccFlags = pkg.ccFlags;
-let ldFlags = pkg.ldFlags;
 
 const query = (q) => {
     return cp.execSync(q).toString()
@@ -23,7 +22,7 @@ const query = (q) => {
 
 const srcToObj = (srcFile) => {
     const newPath = path.join(objPath,
-        srcFile.split('src/')
+        srcFile.split('src\\')
             .pop()
             .split('.c')
             .join('.o'));
@@ -31,24 +30,24 @@ const srcToObj = (srcFile) => {
     const folder = path.dirname(newPath);
 
     if (!fs.existsSync(folder)) {
-        mkdirp.sync(folder)
+        mkdirp.sync(folder,{recursive:true})
     }
     return newPath;
 
 };
 
 const compile = (srcFile) => {
-    cp.execSync(['gcc',
+    cp.execSync([LCC,
         ...ccFlags,
         '-c', srcFile,
         '-o', srcToObj(srcFile)].join(' '));
 }
 
 const link = (objFiles, name) => {
-    cp.execSync(['gcc',
-    ...objFiles,
-    ...ldFlags,    
-        '-o', name].join(' '));
+    cp.execSync([LCC,
+        '-o', name+'.gb',
+        ...objFiles,
+        ].join(' '));
 }
 
 if (fs.existsSync(objPath)) {
@@ -59,16 +58,11 @@ if (fs.existsSync(binPath)) {
     rmrf.sync(binPath);
 }
 
-mkdirp.sync(objPath);
-mkdirp.sync(binPath);
-
-
-ccFlags = [...query('sdl-config --cflags'),...ccFlags];
-ldFlags = [ ...query('sdl-config --libs'),...ldFlags];
+mkdirp.sync(objPath,{recursive:true});
+mkdirp.sync(binPath,{recursive:true});
 
 const findSrcFiles = () => {
     const files = query(`find ./src -type f \\( -name "*.c" \\)`);
-console.log(files)
     return files.map(x => path.resolve(x));
 }
 
