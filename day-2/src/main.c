@@ -3,8 +3,8 @@
 #include <gb/console.h>
 #include <string.h>
 #define SCREEN_W 20
-#define SCREEN_H 18
-char buffer[(SCREEN_H * SCREEN_W)];
+#define SCREEN_H 17
+char buffer[(SCREEN_H * SCREEN_W)+1];
 
 void main()
 {
@@ -12,21 +12,23 @@ void main()
     {
 
         memset(&buffer[0], ' ', SCREEN_W * SCREEN_H);
+        gotoxy(0, 0);
        
         for (int i = 0; i < SCREEN_H; i++)
         {
             for (int j = 0; j < SCREEN_W; j++)
             {
-                if (!(i == 0 || j == 0 || i == SCREEN_H - 1 || j == SCREEN_W - 1))
+                if (i == 0 || j == 0 || i == SCREEN_H - 1 || j == SCREEN_W - 1)
                 {
-                   
+                    buffer[i * SCREEN_W + j] = '*';
+                }else {
                     buffer[i * SCREEN_W + j] = '^';
                 }
             }
         }
-        buffer[(SCREEN_H * SCREEN_W)-1]=0;
+        buffer[(SCREEN_H * SCREEN_W)]=0;
         
-        printf("%s", buffer);
-        gotoxy(0, 0);
+        printf(buffer);
+        printf("GB MAZE");
     }
 }
