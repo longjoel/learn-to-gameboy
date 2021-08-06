@@ -21,16 +21,16 @@ void main()
         memset(&buffer[0], ' ', SCREEN_W * SCREEN_H);
         gotoxy(0, 0);
        
-        for (int i = 0; i < SCREEN_H; i++)
-        {
-            for (int j = 0; j < SCREEN_W; j++)
-            {
-                if (i == 0 || j == 0 || i == SCREEN_H - 1 || j == SCREEN_W - 1)
-                {
-                    buffer[i * SCREEN_W + j] = '*';
-                }
-            }
-        }
+        // for (int i = 0; i < SCREEN_H; i++)
+        // {
+        //     for (int j = 0; j < SCREEN_W; j++)
+        //     {
+        //         if (i == 0 || j == 0 || i == SCREEN_H - 1 || j == SCREEN_W - 1)
+        //         {
+        //             buffer[i * SCREEN_W + j] = '*';
+        //         }
+        //     }
+        // }
         buffer[(SCREEN_H * SCREEN_W)]=0;
 
         buffer[(py*SCREEN_W)+px] = '&';
