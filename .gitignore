@@ -1,4 +1,12 @@
 day-*/node_modules/
 day-*/bin
 day-*/obj
+
+tools/JGBTE/.vs/
+tools/JGBTE/bin/
+tools/JGBTE/obj/
+tools/JGBTE/*.user
+
+
+
 .vscode/
