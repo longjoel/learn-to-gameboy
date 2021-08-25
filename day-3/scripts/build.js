@@ -15,8 +15,8 @@ const binPath = path.join(root, 'bin');
 
 const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json')));
 
-const GBDK_ROOT = path.join(__dirname, '..','..','tools','gbdk');
-const LCC = path.join(GBDK_ROOT, 'bin','lcc.exe');
+const GBDK_ROOT = path.join(__dirname, '..','..','tools',process.platform.toLowerCase() === 'linux' ?'gbdk-linux-64':'gbdk-win32');
+const LCC = path.join(GBDK_ROOT, 'bin','lcc');
 
 const WINE = process.platform.toLowerCase() == 'linux' ? 'wine':'';
 const PS = process.platform.toLowerCase() == 'linux' ? '/':'\\';
@@ -55,14 +55,14 @@ const srcToObj = (srcFile) => {
 };
 
 const compile = (srcFile) => {
-    cp.execSync([WINE,LCC,
+    cp.execSync([LCC,
         ...ccFlags,
         '-c', srcFile,
         '-o', srcToObj(srcFile)].join(' '));
 }
 
 const link = (objFiles, name) => {
-    cp.execSync([WINE,LCC,
+    cp.execSync([LCC,
         '-o', name+'.gb',
         ...objFiles,
         ].join(' '));
