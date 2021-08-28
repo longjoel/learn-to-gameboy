@@ -4,13 +4,13 @@ const fs = require('fs');
 const cp = require('child_process');
 const path = require('path');
 
-const root = path.join(__dirname, '..');
+const root = process.cwd();
 const objPath = path.join(root, 'obj');
 const binPath = path.join(root, 'bin');
 
 const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json')));
 
-const BGB_ROOT = path.join(__dirname, '..','..','tools','bgb');
+const BGB_ROOT = path.join(root,'..','tools','bgb');
 const BGB = path.join(BGB_ROOT, 'bgb');
 const WINE = process.platform.toLowerCase() == 'linux' ? 'wine':'';
 

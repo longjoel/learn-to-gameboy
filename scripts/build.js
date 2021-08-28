@@ -9,13 +9,13 @@ const { resolve } = require('path');
 const readdir = promisify(fs.readdir);
 const stat = promisify(fs.stat);
 
-const root = path.join(__dirname, '..');
-const objPath = path.join(root, 'obj');
-const binPath = path.join(root, 'bin');
+const ROOT = process.cwd();
+const objPath = path.join(ROOT, 'obj');
+const binPath = path.join(ROOT, 'bin');
 
-const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json')));
+const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json')));
 
-const GBDK_ROOT = path.join(__dirname, '..','..','tools',process.platform.toLowerCase() === 'linux' ?'gbdk-linux-64':'gbdk-win32');
+const GBDK_ROOT = path.join(ROOT, '..','tools',process.platform.toLowerCase() === 'linux' ?'gbdk-linux-64':'gbdk-win32');
 const LCC = path.join(GBDK_ROOT, 'bin','lcc');
 
 const WINE = process.platform.toLowerCase() == 'linux' ? 'wine':'';
@@ -71,7 +71,7 @@ const link = (objFiles, name) => {
 
 
 const findSrcFiles = async () => {
-    const files = (await getFiles( path.join(root,'src') )).filter(x=> x.endsWith('.c')); //readDirp() //query(`find ./src -type f \\( -name "*.c" \\)`);
+    const files = (await getFiles( path.join(ROOT,'src') )).filter(x=> x.endsWith('.c')); //readDirp() //query(`find ./src -type f \\( -name "*.c" \\)`);
     return files.map(x => path.resolve(x));
 }
 
@@ -95,7 +95,7 @@ mkdirp.sync(binPath,{recursive:true});
 
     link((await findSrcFiles())
     .map(x => srcToObj(x)),
-    path.join(root, 'bin', pkg.name));
+    path.join(ROOT, 'bin', pkg.name));
 })();
 
 

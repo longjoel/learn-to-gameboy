@@ -2,6 +2,8 @@ day-*/node_modules/
 day-*/bin
 day-*/obj
 
+node_modules/
+
 tools/JGBTE/.vs/
 tools/JGBTE/bin/
 tools/JGBTE/obj/
