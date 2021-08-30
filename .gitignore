@@ -4,11 +4,9 @@ day-*/obj
 
 node_modules/
 
-tools/JGBTE/.vs/
-tools/JGBTE/bin/
-tools/JGBTE/obj/
-tools/JGBTE/*.user
-
-
+tools/JGT.TileEditor/.vs/
+tools/JGT.TileEditor/bin/
+tools/JGT.TileEditor/obj/
+tools/JGT.TileEditor/*.user
 
 .vscode/
