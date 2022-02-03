@@ -8,17 +8,31 @@
 
 void main()
 {
+    int px =5;
+    int py =5;
 
     DISPLAY_OFF;
-    SHOW_BKG;
     set_tile_data(0, 3, TileLabel, 0x90);
-    // set_bkg_tile_xy(0,0,0);
-    // set_bkg_tile_xy(0,1,1);
-    // set_bkg_tile_xy(0,2,2);
+    
+    for (int y = 0; y < 18; y++)
+    {
+        for (int x = 0; x < 20; x++)
+        {
+            set_bkg_tile_xy(x, y, 0);
+            if(y == 0 || y == 17 || x == 0 || x == 19){
+                set_bkg_tile_xy(x,y,1);
+            }
+        }
+    }
+    
+    SHOW_BKG;
+    
     DISPLAY_ON;
 
     while (TRUE)
     {
+                     set_bkg_tile_xy(px,py,2);
+   
         wait_vbl_done();
     }
 }
